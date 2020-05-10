@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int reverse(int x) {
+        long long int num=0,sign=0;
+        if(x>=INT_MAX || x<=INT_MIN)
+            return 0;
+        if(x<0)
+            sign =1;
+        //cout<<sign<<endl;
+        while(x)
+        {
+            if((num*10)>INT_MAX || (num*10)<INT_MIN)
+                return 0;
+            num=num*10 + x%10;
+            x/=10;
+        }
+        return num;
+    }
+};
