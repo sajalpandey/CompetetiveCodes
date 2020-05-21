@@ -1,0 +1,25 @@
+class Solution {
+public:
+    double myPow(double x, int n) {
+        double pr=1;
+        long long int sign=abs(n);
+        while(sign)
+        {
+            if(sign%2==1)
+            {
+                pr=pr*x;
+                
+                sign--;
+            }
+            else
+            {
+                x=x*x;
+                sign=sign/2;
+            }
+        }
+        cout<<pr;
+        if(n<0)
+            return 1/pr;
+        return pr;
+    }
+};
