@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        int result = 0;
+    for(int i = 0; i < points.size(); i++){
+        int samePoint = 1,vertical=0;
+        unordered_map<string, int> map;
+        for(int j = i + 1; j < points.size(); j++){
+            if(points[i][0] == points[j][0] && points[i][1] == points[j][1]){
+                samePoint++;
+            }
+            else if(points[i][0] == points[j][0]){
+                map["v"]++;
+            }
+            else{
+                int p=points[j][1]-points[i][1];
+                int q=points[j][0]-points[i][0];
+                int g=__gcd(p,q);
+                map[to_string(p/g)+'_'+to_string(q/g)]++;
+            }
+        }
+        int localMax = 0;
+        for(auto it = map.begin(); it != map.end(); it++){
+            localMax = max(localMax, it->second);
+        }
+        localMax += samePoint;
+        result = max(result, localMax);
+    }
+    return result;
+    }
+};
