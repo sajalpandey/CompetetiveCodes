@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> result;
+        vector<int> temp;
+        result.push_back(temp);
+        int n=pow(2,nums.size());
+        for(int i=1;i<n;i++)
+        {
+            temp.clear();
+            for(int j=0;j<nums.size();j++)
+            {
+                if(i & (1<<j))
+                {
+                    temp.push_back(nums[j]);
+                }
+            }
+            result.push_back(temp);
+            
+        }
+        return result;
+    }
+};
