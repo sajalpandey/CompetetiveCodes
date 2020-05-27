@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& Intervals) {
+        if(Intervals.size()<2)
+            return Intervals;
+        sort(Intervals.begin(),Intervals.end());
+        int j=0;
+        for(int i=1;i<Intervals.size();i++)
+        {
+            if(Intervals[i][0]<=Intervals[j][1])
+                Intervals[j][1]=max(Intervals[i][1],Intervals[j][1]);
+            else
+            {
+                ++j;
+                Intervals[j][0]=Intervals[i][0];
+                Intervals[j][1]=Intervals[i][1];
+            }
+        }
+        Intervals.erase(Intervals.begin()+j+1,Intervals.end());
+        return Intervals;
+    }
+};
