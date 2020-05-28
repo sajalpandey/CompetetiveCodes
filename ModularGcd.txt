@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+
+#define mod 1000000007
+#define lli long long int
+ 
+using namespace std;
+
+lli power(lli a,lli n,lli m)
+{
+	lli res=1;
+	while(n)
+	{
+		if(n%2==1)
+		{
+			res = ((res%m)*(a%m))%m;
+			n--;
+		}
+		else
+		{
+			a=((a%m)*(a%m))%m;
+			n/=2;
+		}
+	}	
+	return res;
+}
+
+lli gcd(lli a,lli b,lli n)
+{
+	if(a==b)
+	{
+		return (power(a,n,mod) +power(b,n,mod))%mod;
+	}
+	
+	lli num=a-b;
+	lli candidate=1;
+	
+	for(lli i=1 ;i*i<=num;i++)
+	{
+		if(num%i==0)
+		{
+			lli temp= (power(a,n,i)+power(b,n,i))%i;
+			if(temp==0)
+				candidate= max(candidate,i);
+			temp=(power(a,n,num/i)+power(b,n,num/i))%(num/i);
+			if(temp==0)
+				candidate= max(candidate,num/i);
+		}
+	}
+	
+	return candidate%mod;
+}
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		lli a,b,n;
+		cin>>a>>b>>n;
+		cout<<gcd(a,b,n)<<endl;
+	}
+}
