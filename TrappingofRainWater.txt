@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int l=0,r=height.size()-1,lmax=0,rmax=0,ans=0;
+        
+        // which ever lmax or rmax is smaller contributes to the ans
+        // so keep a lmax and rmax instead of array
+        while(l<r)
+        {
+            if(height[l]<=height[r])
+            {
+                if(height[l]>lmax)
+                    lmax=height[l];
+                ans+=lmax-height[l];
+                l++;
+            }
+            else
+            {
+                if(height[r]>rmax)
+                    rmax=height[r];
+                ans+=rmax-height[r];
+                r--;
+            }
+        }
+        return ans;
+    }
+};
