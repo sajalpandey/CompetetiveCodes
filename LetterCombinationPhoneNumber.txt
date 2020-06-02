@@ -1,0 +1,33 @@
+class Solution {
+public:
+    void generateCombination(vector<string>&ans,string digits,string curr,int index,string mapping[])
+    {
+        if(index==digits.size())
+        {
+            ans.push_back(curr);
+            return ;
+        }
+        
+        string temp=mapping[digits[index]-'0'];
+        
+        for(int i=0;i<temp.size();i++)
+            generateCombination(ans,digits,curr+temp[i],index+1,mapping);
+    }
+    
+   vector<string> letterCombinations(string digits) {
+        if(digits.size()==0)
+            return {};
+        vector<string> ans;
+        string mapping[]={"0","1","abc",
+                     "def",
+                     "ghi",
+                     "jkl",
+                     "mno",
+                     "pqrs",
+                     "tuv",
+                     "wxyz"};
+        
+        generateCombination(ans,digits,"",0,mapping);
+        return ans;
+    }
+};
