@@ -1,0 +1,78 @@
+class Solution {
+public:
+    int precedence(char ch)
+    {
+        if(ch=='+' || ch=='-')
+            return 1;
+        if(ch=='*' || ch=='/')
+            return 2;
+        return 0;
+    }
+    
+    int cal(int a,int b, char ch)
+    {
+        switch(ch){ 
+        case '+': return a + b; 
+        case '-': return a - b; 
+        case '*': return a * b; 
+        case '/': return a / b; 
+        } 
+        return 0;
+    }
+    int calculate(string s) {
+        stack<char> op;
+        stack<int> values;
+        int i;
+        for(i=0;i<s.size();i++)
+        {
+            if(s[i]==' ')
+                continue;
+            
+            else if(isdigit(s[i]))
+            {
+                int val=0;
+                while(i<s.size() && isdigit(s[i]))
+                {
+                    val=val*10 + (s[i]-'0');
+                    i++;
+                }
+                i--;
+                values.push(val);
+            }
+            else
+            {
+                while(!op.empty() && precedence(op.top())>=precedence(s[i]))
+                {
+                    int val2=values.top();
+                    values.pop();
+                    int val1=values.top();
+                    values.pop();
+                    
+                    char p=op.top();
+                    op.pop();
+                    
+                    
+                    values.push(cal(val1,val2,p));
+                }
+                   
+                op.push(s[i]);
+            }  
+        }
+        
+        while(!op.empty())
+        {
+            int val2=values.top();
+            values.pop();
+            int val1=values.top();
+            values.pop();
+
+            char p=op.top();
+            op.pop();
+
+            
+            values.push(cal(val1,val2,p));
+        }
+        
+        return values.top();
+    }
+};
