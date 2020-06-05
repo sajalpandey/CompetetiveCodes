@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+bool isPal(string str, int low, int high) 
+{ 
+    while (low < high) 
+    { 
+        if (str[low] != str[high]) 
+            return false; 
+        low++; 
+        high--; 
+    } 
+    return true; 
+}
+void allPart(vector<vector<string>>& ans,vector<string> v,int start,int n,string str)
+{
+    if(start>=n)
+    {
+        ans.push_back(v);
+        return;
+    }
+    
+    for(int i=start;i<n;i++)
+    {
+        if(isPal(str,start,i))
+        {
+            v.push_back(str.substr(start,i-start+1));
+            allPart(ans,v,(i+1),n,str);
+            v.pop_back();
+        }
+    }
+}
+int main() {
+	string str="sajal";
+	vector<vector<string>> ans;
+	vector<string> v;
+	allPart(ans,v,0,str.size(),str);
+	
+	for(auto m:ans)
+	{
+	    for(auto m1:m)
+	        cout<<m1<<" ";
+	    cout<<endl;
+	}
+	return 0;
+}
