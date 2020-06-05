@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void generate(char str[],int n,int k)
+{
+    //cout<<str<<endl;
+    if(n==k)
+    {
+        str[n] = '\0' ;
+        cout<<str<<endl;
+        return ;
+    }
+    
+    if(str[n-1]=='1')
+    {
+        str[n]='0';
+        generate(str,n+1,k);
+    }
+    else if (str[n-1]=='0')
+    {
+        str[n]='0';
+        generate(str,n+1,k);
+        str[n]='1';
+        generate(str,n+1,k);
+    }
+    
+}
+int main() {
+	int k=4;
+	char str[k];
+	str[0]='0';
+	generate(str,1,k);
+	str[0]='1';
+	generate(str,1,k);
+	return 0;
+}
