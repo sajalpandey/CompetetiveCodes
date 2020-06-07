@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void powerSet(string str,int n,int index,string curr)
+{
+    if(index==n+1)
+        return;
+        
+    cout<<curr<<endl;
+    for(int i=index;i<n;i++)
+    {
+        curr+=str[i];
+        powerSet(str,n,i+1,curr);
+        curr.erase(curr.size()-1);
+    }
+    return ;
+}
+
+int main() {
+	string str="abc";
+	powerSet(str,str.size(),0,"");
+	return 0;
+}
