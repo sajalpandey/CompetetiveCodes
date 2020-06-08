@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void binaryGray(string str,int n,int index,string gray)
+{
+    if(index==n)
+    {
+        cout<<gray<<endl;
+        return;
+    }
+    
+    if(index==0)
+        gray+=str[index];
+    else
+        gray+=to_string((str[index-1]-'0')^(str[index]-'0'));
+    
+    binaryGray(str,n,index+1,gray);
+}
+
+int main() {
+	string bin="1011101";
+	string gray="";
+	binaryGray(bin,7,0,gray);
+	return 0;
+}
