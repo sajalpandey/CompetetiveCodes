@@ -1,0 +1,40 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        vector<int> v;
+        ListNode *ptr=head,*t1=NULL,*t2=NULL;
+        while(ptr)
+        {
+            v.push_back(ptr->val);
+            ptr=ptr->next;
+        }
+        ptr=head;
+        while(ptr)
+        {
+            t2=ptr->next;
+            ptr->next=t1;
+            t1=ptr;
+            ptr=t2;
+        }
+        int i=0;
+        while(t1)
+        {
+            if(t1->val!=v[i])
+                return false;
+            i++;
+            t1=t1->next;
+        }
+        return true;
+        
+    }
+};
