@@ -13,6 +13,8 @@ public:
     void reorderList(ListNode* head) {
         if(!head)
             return ;
+        
+        //Find Middle of linked list
         ListNode *slow=head,*fast=head->next;
         while(fast && fast->next)
         {
@@ -20,6 +22,7 @@ public:
             fast=fast->next->next;
         }
         
+        //Reverse the list after the middle node
         ListNode *start=slow->next,*t1=NULL,*t2=NULL;
         while(start)
         {
@@ -28,6 +31,8 @@ public:
             t1=start;
             start=t2;
         }
+        
+        //Simply merge the two lists 
         slow->next=t1;
         ListNode *p,*q;
         fast=slow->next;

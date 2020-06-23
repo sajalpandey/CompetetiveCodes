@@ -1,0 +1,63 @@
+class Solution {
+public:
+    string decodeString(string str) {
+        string decode="",temp;
+        stack<int> num;
+        stack<char> ch;
+        for(int i=0;i<str.size();i++)
+        {
+            if(isdigit(str[i]))
+            {
+                int val=0;
+                while(isdigit(str[i]))
+                {
+                    val=val*10 + (str[i]-'0');
+                    i++;
+                }
+                i--;
+                num.push(val);
+            }
+            else if(str[i]=='[')
+            {
+                if(isdigit(str[i-1]))
+                {
+                    ch.push(str[i]);
+                }
+                else
+                {
+                    ch.push(str[i]);
+                    num.push(1);
+                }
+            }
+            else if(str[i]==']')
+            {
+                int val=num.top();
+                num.pop();
+                temp="";
+                while(!ch.empty() && ch.top()!='[')
+                {
+                    temp=ch.top()+temp;
+                    ch.pop();
+                }
+                if(!ch.empty() && ch.top()=='[')
+                    ch.pop();
+                for(int i=0;i<val;i++)
+                {
+                    decode+=temp;
+                }
+                for(int i=0;i<decode.size();i++)
+                    ch.push(decode[i]);
+                decode="";
+            }
+            else
+                ch.push(str[i]);
+        }
+        decode="";
+        while(!ch.empty())
+        {
+            decode=ch.top()+decode;
+            ch.pop();
+        }
+        return decode;
+    }
+};
