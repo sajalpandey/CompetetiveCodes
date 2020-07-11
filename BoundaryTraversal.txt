@@ -1,0 +1,58 @@
+/* A binary tree Node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+void leafNode(Node *root,vector<int> &ans)
+{
+    if(root)
+    {
+        leafNode(root->left,ans);
+        if(!root->left && !root->right)
+            ans.emplace_back(root->data);
+        leafNode(root->right,ans);
+    }
+}
+vector <int> printBoundary(Node *root)
+{
+    vector<int> ans;
+    if(!root)
+        return ans;
+    
+    Node *curr=root;
+    ans.emplace_back(curr->data);
+    curr=root->left;
+    /********************Left Subtree Traversal*******************/
+    if(root->left)
+    {
+        while(curr->left || curr->right)
+        {
+            ans.emplace_back(curr->data);
+            if(curr->left)
+                curr=curr->left;
+            else if(curr->right)
+                curr=curr->right;
+            
+        }
+    }
+    /*****************************Leaf Nodes **********************/
+    leafNode(root,ans);
+
+    /**************************Right Subtree Traversal**************/
+    if(root->right)
+    {
+        curr=root->right;
+        int l=ans.size();
+        while(curr->right || curr->left)
+        {
+            ans.insert(ans.begin()+l,curr->data);
+            if(curr->right)
+                curr=curr->right;
+            else if(curr->left)
+                curr=curr->left;
+        }
+    }
+    
+    return ans;
+}
