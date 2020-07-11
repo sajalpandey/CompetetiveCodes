@@ -1,0 +1,44 @@
+struct Node
+{
+    int data; //data of the node
+    Node *left, *right; //left and right references
+
+    // Constructor of tree node
+    Node(int key)
+    {
+        data = key;
+        left = right = NULL;
+    }
+}; */
+
+// Method that returns the bottom view.
+vector <int> bottomView(Node *root)
+{
+    if (root == NULL)
+        return {};
+    map<int, vector<int>> m;
+    queue<pair<Node*, int>> q;
+    int hd = 0;
+    q.push(make_pair(root, hd));
+
+    while (!q.empty())
+    {
+        pair<Node*, int> temp = q.front();
+        q.pop();
+        Node* x = temp.first;
+        hd = temp.second;
+        m[hd].push_back(x->data);
+
+        if (x->left != NULL)
+            q.push(make_pair(x->left, hd - 1));
+
+
+        if (x->right != NULL)
+            q.push(make_pair(x->right, hd + 1));
+    }
+    
+    for(auto a:m)
+        cout<<a.second[a.second.size()-1]<<" ";
+    return {};
+}
+
