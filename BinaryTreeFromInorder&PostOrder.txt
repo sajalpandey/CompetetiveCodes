@@ -11,26 +11,27 @@
  */
 class Solution {
 public:
-    int index=0;
-    TreeNode *NewTree(vector<int>& preorder,vector<int> &inorder,int l,int r,unordered_map<int,int> &mp)
+    //int index=0;
+    TreeNode *helper(vector<int>&inorder,vector<int>&postorder,int l,int r,unordered_map<int,int> &mp,int *p)
     {
         if(l>r)
             return NULL;
-        TreeNode * root=new TreeNode(preorder[index++]);
-        int findEle;
+        TreeNode *root=new TreeNode(postorder[(*p)]);
+        (*p)--;
         if(l==r)
             return root;
-        findEle=mp[root->val];
-        root->left=NewTree(preorder,inorder,l,findEle-1,mp);
-        root->right=NewTree(preorder,inorder,findEle+1,r,mp);
+        int findEle=mp[root->val];
+        root->right=helper(inorder,postorder,findEle+1,r,mp,p);
+        root->left=helper(inorder,postorder,l,findEle-1,mp,p);
         return root;
     }
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        if(preorder.size()==0 && inorder.size()==0)
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        if(inorder.size()==0 && postorder.size()==0)
             return NULL;
         unordered_map<int,int> mp;
         for(int i=0;i<inorder.size();i++)
             mp[inorder[i]]=i;
-        return NewTree(preorder,inorder,0,inorder.size()-1,mp);
+        int index=inorder.size()-1;
+        return helper(inorder,postorder,0,inorder.size()-1,mp,&index);
     }
 };
