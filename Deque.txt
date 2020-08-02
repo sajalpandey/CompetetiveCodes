@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int getWinner(vector<int>& arr, int k) {
+        deque<int> d;
+        int count=0;
+        for(auto m:arr)
+            d.emplace_back(m);
+        while(1)
+        {
+            int first=d.front();
+            d.pop_front();
+            int second=d.front();
+            d.pop_front();
+            if(first>second)
+            {
+                count++;
+                if(count>=k || count>=arr.size())
+                    return first;
+                d.emplace_front(first);
+                d.emplace_back(second);
+            }
+            else
+            {
+                count=1;
+                if(count>=k)
+                    return second;
+                d.emplace_front(second);
+                d.emplace_back(first);
+            }
+        }
+        return 0;
+    }
+};
