@@ -39,3 +39,41 @@ public:
             return pathP[--i];
     }
 };
+
+
+
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(!root)
+            return NULL;
+        if(root==p || root==q)      //Check if root is one of the nodes given
+            return root;
+        
+        //cheeck in left and right of the node if its so then node is LCA
+        TreeNode *left=lowestCommonAncestor(root->left,p,q);
+        TreeNode *right=lowestCommonAncestor(root->right,p,q);
+        
+        if(left && right)
+            return root;
+        //if left contains nothing then everything is on the right
+        if(!left)
+            return right;
+        
+        //same everything is on the left side
+        if(!right)
+            return left;
+        return NULL;
+    }
+};
