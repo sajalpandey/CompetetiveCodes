@@ -19,6 +19,7 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
+        //METHOD _1
         if(!root)
             return NULL;
         queue<Node *> q;
@@ -38,6 +39,21 @@ public:
                 if(tmp->right)
                     q.emplace(tmp->right);
             }
+        }
+        
+        //METHOD 2
+        Node * cur=root,*tmp;
+        while(cur->left)
+        {
+            tmp=cur;
+            while(tmp)
+            {
+                tmp->left->next=tmp->right;
+                if(tmp->next)
+                    tmp->right->next=tmp->next->left;
+                tmp=tmp->next;
+            }
+            cur=cur->left;
         }
         return root;
     }
