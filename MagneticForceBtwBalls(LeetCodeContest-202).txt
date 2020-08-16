@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool check(int mid,vector<int>&pos,int m)
+    {
+        int k=1;
+        int lastPos=pos[0];
+        for(int i=1;i<pos.size();i++)
+        {
+            if(pos[i]-lastPos>=mid)
+            {
+                lastPos=pos[i];
+                k++;
+                if(k==m)
+                    return true;
+            }
+        }
+        return false;
+    }
+    int maxDistance(vector<int>& position, int m) {
+        if(position.size()==0)
+            return 0;
+        sort(position.begin(),position.end());
+        int low=1,high=position[position.size()-1];
+        int ans=-1;
+        while(low<high)
+        {
+            int mid=(high+low)/2;
+            //cout<<"mid = "<<mid<<endl;
+            if(check(mid,position,m))
+            {
+                ans=max(ans,mid);
+                low=mid+1;
+            }
+            else
+                high=mid;
+        }
+        return ans;
+    }
+};
