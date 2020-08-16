@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string makeGood(string str) {
+        if(str.size()==0)
+            return "";
+        int i=0,j=0;
+        while(i<str.size()-1)
+        {
+            //cout<<i<<" ";
+            if(str[i]+32 == str[i+1] || str[i]==str[i+1]+32)
+            {
+                if(i!=0)
+                    j=i-1;
+                else
+                    j=0;
+                str.erase(str.begin()+i);
+                str.erase(str.begin()+i);
+                i=j;
+            }
+            else
+                i++;
+            if(str.empty())
+                break;
+        }
+        return str;
+    }
+};
