@@ -1,0 +1,57 @@
+class Solution {
+public:
+    vector<int> ans;
+    // void topologicalSort(int vertex,int visited[],vector<int>&ans,vector<vector<int>> &g)
+    // {
+    //     visited[vertex]=1;
+    //     for(auto child:g[vertex])
+    //     {
+    //         if(!visited[child])
+    //             topologicalSort(child,visited,ans,g);
+    //     }
+    //     ans.insert(ans.begin(),vertex);
+    // }
+    vector<int> findOrder(int numCourse, vector<vector<int>>& prerequisites) {
+        //Make a graph
+        vector<vector<int>> g(numCourse);
+        vector<int> indegree(numCourse,0);
+        for(auto v:prerequisites){
+            g[v[1]].emplace_back(v[0]);
+            indegree[v[0]]++;
+        }
+        queue<int> q;
+        for(int i=0;i<numCourse;i++)
+        {
+            if(indegree[i]==0)
+                q.emplace(i);
+        }
+        while(!q.empty())
+        {
+            int curr=q.front();
+            ans.emplace_back(curr);
+            q.pop();
+            //Traverse all the child and decrese all childeren's iindegree by 1
+            // if anytime indegree is zero means that childeren can be visited
+            //so push to the queue
+            for(auto ele:g[curr])
+            {
+                indegree[ele]--;
+                if(indegree[ele]==0)
+                    q.emplace(ele);
+            }
+            numCourse--;
+        }
+        if(numCourse==0)
+            return ans;
+        return {};
+        // int visited[numCourse+1];
+        // for(int i=0;i<numCourse+1;i++)
+        //     visited[i]=0;    
+        // for(int i=0;i<numCourse;i++)
+        // {
+        //     if(!visited[i])
+        //         topologicalSort(i,visited,ans,g);
+        // } 
+        // return ans;
+    }
+};
