@@ -21,7 +21,7 @@ public:
         {
             int curr=q.front();
             q.pop();
-            //Traverse all the child and decrese all childeren's iindegree by 1
+            //Traverse all the child and decrese all childeren's indegree by 1
             // if anytime indegree is zero means that childeren can be visited
             //so push to the queue
             for(auto ele:adj[curr])
