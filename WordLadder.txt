@@ -39,3 +39,64 @@ public:
         return 0;
     }
 };
+
+
+
+//TWO WAY BFS
+class Solution {
+public:
+    int ladderLength(string bword, string eword, vector<string>& wordList) {
+        if(bword.size()==0 || eword.size()==0 || bword==eword)
+            return 0;
+        unordered_set<string> dict;
+        for(auto m:wordList)
+            dict.insert(m);
+        if(dict.find(eword)==dict.end())
+            return 0;
+        unordered_set<string> forward,backward,*first,*second;
+        forward.insert(bword);
+        backward.insert(eword);
+        int ladder=2;
+        while(!forward.empty()&& !backward.empty())
+        {
+            if(forward.size()<backward.size())
+            {
+                first=&forward;
+                second=&backward;
+            }
+            else
+            {
+                first=&backward;
+                second=&forward;
+            }
+            unordered_set<string> next;
+            for(auto itr=first->begin();itr!=first->end();itr++)
+            {
+                string word=*itr;
+                
+                for(int i=0;i<word.size();i++)
+                {
+                    char ch=word[i];
+                    for(int j=0;j<26;j++)
+                    {
+                        word[i]='a'+j;
+                        if(second->find(word)!=second->end())
+                        {
+                            return ladder;
+                        }
+                        
+                        if(dict.find(word)!=dict.end())
+                        {
+                            dict.erase(word);
+                            next.insert(word);
+                        }
+                    }
+                    word[i]=ch;
+                } 
+            }
+            ladder++;
+            swap(*first,next);
+        }
+        return 0;
+    }
+};
