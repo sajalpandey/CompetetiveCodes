@@ -1,0 +1,51 @@
+class Solution {
+public:
+    void helper(vector<vector<char>> &board,int i,int j)
+    {
+        if(board[i][j]=='O')
+        {
+            board[i][j]='#';
+            if(i<board.size()-1) helper(board,i+1,j);
+            if(j<board[0].size()-1) helper(board,i,j+1);
+            if(i>1) helper(board,i-1,j);
+            if(j>1) helper(board,i,j-1);
+        }
+    }
+    void solve(vector<vector<char>>& board) {
+        if(board.size()==0)
+            return;
+        //first check border for 'O' if yes then
+        //make it some other character and check for it surrounding to make 'O' to other char
+        
+        int row=board.size();
+        int col=board[0].size();
+        
+        //check in first row and last row
+        for(int i=0;i<col;i++)
+            helper(board,0,i);
+        for(int i=0;i<col;i++)
+            helper(board,row-1,i);
+        
+        ///check for first and last column
+        for(int i=0;i<row;i++)
+            helper(board,i,0);
+        for(int i=0;i<row;i++)
+            helper(board,i,col-1);
+        
+        //now replace 'O' with 'X'
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+                if(board[i][j]=='O')
+                    board[i][j]='X';
+        }
+        
+        //now replace '#' with 'O'
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+                if(board[i][j]=='#')
+                    board[i][j]='O';
+        }
+    }
+};
